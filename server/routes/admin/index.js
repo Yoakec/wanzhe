@@ -3,6 +3,7 @@ module.exports = app => {
     const router = express.Router()
     const {execSQL} = require('../../plugins/db')
     const Category = require('../../models/Category')
+    const Categoty_child = require('../../models/Categoty_child')
 
     /**
      * 添加主分类方法
@@ -19,7 +20,7 @@ module.exports = app => {
      * 查询主分类方法
      */
     router.get('/catrgories', async (req, res) => {
-        const sql = `select * from category limit 10`
+        const sql = `select * from category`
         //....这里执行数据库操作
         const sql_result = await execSQL(sql)
         res.send(sql_result)
@@ -58,6 +59,22 @@ module.exports = app => {
             success:'true'
         })
     })
+
+    /**
+     * 新增二级分类
+     */
+    router.post('/catrgorieschild',async(req,res) =>{
+        const ca_model = new Categoty_child(req.body.category_part_id,req.body.category_name)
+        const sql = `insert into categorychild (category_part_id,category_id,category_name) value('${ca_model.category_part_id}','${ca_model.category_child_id}','${ca_model.category_child_name}')`
+        //....这里执行数据库操作
+        const sql_result = await execSQL(sql)
+        res.send(ca_model)
+    })
+
+    /**
+     * 联合查询一级分类和二级分类
+     */
+    
     /**
      * 子路由挂载
      */
