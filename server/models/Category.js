@@ -2,8 +2,8 @@ const uuid = require('uuid')
 
 module.exports = class Category{
     
-    constructor(name){
+    constructor(category_name){
         this.id = uuid.v4()
-        this.name = name
+        this.category_name = category_name
     }
 }
