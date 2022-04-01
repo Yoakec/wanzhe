@@ -57,7 +57,8 @@ getParentNode()
 let formLabelAlign = reactive({
   category_id: '',
   category_name: '',
-  category_part_id:''
+  category_part_id: '',
+  category_child_id:''
 })
 
 
@@ -91,19 +92,22 @@ const save = async () => {
  * 如果是二级分类，就需要对select组件进行赋值
  */
 if (props.id) {
-  const res = global.$http.get(`catrgories/${props.id}`)
-  res.then(data => {
-    let res = data.data[0]
-    if(typeof res.category_part_id == 'undefined'){
-      temp_parentid.value = "0"
-      const {category_name,category_id} = res
-      formLabelAlign.category_name = category_name
-      formLabelAlign.category_id = category_id
-    }else{
-      temp_parentid.value = res.category_part_id
-      formLabelAlign =res
+  let res = props.id.split(' ')
+   const getnode = async (res) =>{
+       console.log("3213");
+      if(res[1] == '1'){
+        const {data} = await global.$http.get(`/catrgories/${res[0]}`)
+        temp_parentid.value = '0'
+        formLabelAlign.category_name = data[0].category_name
+        formLabelAlign.category_id = data[0].category_id
+      }else{
+        const {data} = await global.$http.get(`/catrgorieschild/${res[0]}`)
+        temp_parentid.value = data[0].category_part_id
+        formLabelAlign.category_name = data[0].category_child_name
+        formLabelAlign.category_child_id = data[0].category_child_id
+      }
     }
-  })
+    getnode(res)
 }
 </script>
 

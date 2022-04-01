@@ -60,21 +60,50 @@ module.exports = app => {
         })
     })
 
+    /**----------------二级分类--------------------------- */
+
     /**
      * 新增二级分类
      */
     router.post('/catrgorieschild',async(req,res) =>{
         const ca_model = new Categoty_child(req.body.category_part_id,req.body.category_name)
-        const sql = `insert into categorychild (category_part_id,category_id,category_name) value('${ca_model.category_part_id}','${ca_model.category_child_id}','${ca_model.category_child_name}')`
+        const sql = `insert into categorychild (category_part_id,category_child_id,category_child_name) value('${ca_model.category_part_id}','${ca_model.category_child_id}','${ca_model.category_child_name}')`
         //....这里执行数据库操作
         const sql_result = await execSQL(sql)
         res.send(ca_model)
     })
 
     /**
-     * 联合查询一级分类和二级分类
+     * 查询二级分类
      */
-    
+         router.get('/catrgorieschild/:id',async(req,res) =>{
+            const sql = `select * from categorychild where category_child_id = '${req.params.id}'`
+            //....这里执行数据库操作
+            const sql_result = await execSQL(sql)
+            res.send(sql_result)
+        })
+
+    /**
+     * 联合查询二级分类
+     */
+     router.get('/catrgorieschild',async(req,res) =>{
+        const sql = `select * from categorychild ch left join category pa on pa.category_id = ch.category_part_id;`
+        //....这里执行数据库操作
+        const sql_result = await execSQL(sql)
+        res.send(sql_result)
+    })
+
+    /**
+     * 删除二级分类
+     */
+     router.delete('/catrgorieschild/:id', async (req,res) =>{
+        const sql = `delete from categorychild where category_child_id = '${req.params.id}' `
+        //....这里执行数据库操作
+        const sql_result = await execSQL(sql)
+        res.send({
+            success:'true'
+        })
+    })
     /**
      * 子路由挂载
      */
