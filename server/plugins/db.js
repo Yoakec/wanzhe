@@ -1,26 +1,5 @@
-    const mysql = require('mysql')
-    const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '123456',
-        port: 3306,
-        database: 'wanzhe'
-    });
-    connection.connect();
+module.exports = (app) =>{
+    const mongoose = require('mongoose')
+    mongoose.connect('mongodb://localhost:27017/wanzhe',{ useNewUrlParser: true, useUnifiedTopology: true })
 
-    function execSQL(sql) {
-        const Sqlpromise = new Promise((res, rej) => {
-            connection.query(sql, (err, result) => {
-                if (err) {
-                    rej(err)
-                    return
-                }
-                res(result)
-            })
-
-        })
-        return Sqlpromise
-    }
-module.exports ={
-    execSQL
 }

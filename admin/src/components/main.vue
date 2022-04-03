@@ -1,21 +1,24 @@
 <template>
-  <el-container
-    class="layout-container-demo"
-    style="height: 100vh; border: 1px solid #eee"
-  >
+  <el-container class="layout-container-demo" style="height: 100vh; border: 1px solid #eee">
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
       <el-scrollbar>
         <el-menu router :default-openeds="['1', '3']">
           <el-sub-menu index="1">
             <template #title>
-              <el-icon><message /></el-icon>内容管理
+              <el-icon>
+                <message />
+              </el-icon>内容管理
             </template>
             <el-menu-item-group>
               <template #title>分类</template>
               <el-menu-item index="/categories/create">新建分类</el-menu-item>
               <el-menu-item index="/categories/list">内容列表</el-menu-item>
             </el-menu-item-group>
-
+            <el-menu-item-group>
+              <template #title>物品</template>
+              <el-menu-item index="/items/create">新建物品</el-menu-item>
+              <el-menu-item index="/items/list">物品列表</el-menu-item>
+            </el-menu-item-group>
           </el-sub-menu>
         </el-menu>
       </el-scrollbar>
@@ -25,9 +28,9 @@
       <el-header style="text-align: right; font-size: 12px">
         <div class="toolbar">
           <el-dropdown>
-            <el-icon style="margin-right: 8px; margin-top: 1px"
-              ><setting
-            /></el-icon>
+            <el-icon style="margin-right: 8px; margin-top: 1px">
+              <setting />
+            </el-icon>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>View</el-dropdown-item>
@@ -41,8 +44,7 @@
       </el-header>
 
       <el-main>
-          <router-view></router-view>
-       
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>

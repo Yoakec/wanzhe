@@ -1,9 +1,10 @@
-const uuid = require('uuid')
+const mongoose = require('mongoose')
 
-module.exports = class Category{
-    
-    constructor(category_name){
-        this.id = uuid.v4()
-        this.category_name = category_name
-    }
-}
+const schema = new mongoose.Schema({
+    name:{type: String },
+    //定义parent为数据模型，关联的模型名字为Category,但是存进去的是上级名称的惟一_ID
+    parent:{type:mongoose.Schema.Types.ObjectId,ref:'Category'},
+})
+
+
+module.exports = mongoose.model('Category',schema)
