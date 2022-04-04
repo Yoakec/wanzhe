@@ -11,6 +11,9 @@ import ItemList from './components/ItemList.vue'
 
 import HeroEdit from './components/HeroEdit.vue'
 import HeroList from './components/HeroList.vue'
+
+import ArticleEdit from './components/ArticleEdit.vue'
+import ArticleList from './components/ArticleList.vue'
 // 2. 定义一些路由
 // 每个路由都需要映射到一个组件。
 // 我们后面再讨论嵌套路由。
@@ -29,7 +32,12 @@ const routes = [
 
             {path:'/heros/create',component:HeroEdit},
             {path:'/heros/edit/:id',component:HeroEdit,props:true},
-            {path:'/heros/list',component:HeroList}
+            {path:'/heros/list',component:HeroList},
+
+            {path:'/articles/create',component:ArticleEdit},
+            {path:'/articles/edit/:id',component:ArticleEdit,props:true},
+            {path:'/articles/list',component:ArticleList}
+
         ]
     }
 ]

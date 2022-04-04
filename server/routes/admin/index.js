@@ -2,7 +2,7 @@ module.exports = app => {
     const express = require('express')
     const router = express.Router({
         //合并url参数，就是相当于最下面app.use()中的:resource可以在后面的router中使用
-        mergeParams:true
+        mergeParams: true
 
     })
     // const { execSQL } = require('../../plugins/db')
@@ -26,20 +26,23 @@ module.exports = app => {
     /**
      * 查询分类
      */
-     router.get('/', async (req, res) => {
-        
-        const queroptions = {}
-        if(req.Model.modelname ==='Category'){
-            queroptions.populate = 'parent'
+    router.get('/', async (req, res) => {
+        let model;
+        switch (req.Model.modelName) {
+            case 'Category':
+                model = await req.Model.find().populate('parent').limit(10)
+                break
+            default:
+                model = await req.Model.find().limit(10)
+                break
         }
-        const model = await req.Model.find().setOptions(queroptions).limit(10)
         res.send(model)
     })
 
     /**
      * 查询单个分类
      */
-     router.get('/:id', async (req, res) => {
+    router.get('/:id', async (req, res) => {
         const model = await req.Model.findById(req.params.id)
         res.send(model)
     })
@@ -47,8 +50,8 @@ module.exports = app => {
     /**
      * 修改单个分类
      */
-    router.put('/:id',async(req,res) =>{
-        const model = await req.Model.findByIdAndUpdate(req.params.id,req.body)
+    router.put('/:id', async (req, res) => {
+        const model = await req.Model.findByIdAndUpdate(req.params.id, req.body)
         res.send(model)
     })
 
@@ -56,33 +59,50 @@ module.exports = app => {
      * 删除方法
      */
 
-    router.delete('/:id',async(req,res) =>{
-        const model = await req.Model.findByIdAndDelete(req.params.id,req.body)
+    router.delete('/:id', async (req, res) => {
+        const model = await req.Model.findByIdAndDelete(req.params.id, req.body)
         res.send({
-            success:true,
+            success: true,
         })
     })
     /**
      * 子路由挂载
      */
-    app.use('/admin/api/rest/:resource',async(req,res,next) =>{
+    app.use('/admin/api/rest/:resource', async (req, res, next) => {
         const Model_name = require('inflection').classify(req.params.resource)
         req.Model = require(`../../models/${Model_name}`)
         next()
-    },router)
+    }, router)
 
 
     /**
      * 上传图片
      */
     const multer = require('multer')
-    const upload = multer({dest:__dirname + '../../../uploads'})
-    app.post('/admin/api/upload',upload.single('file'),async (req,res) =>{
+    const upload = multer({ dest: __dirname + '../../../uploads' })
+    app.post('/admin/api/upload', upload.single('file'), async (req, res) => {
         const file = req.file
+        console.log(file);
         file.url = `http://localhost:8089/uploads/${req.file.filename}`
         res.send(file)
     })
-     
+
+    /**
+     * 多文件上传
+     */
+    //  const Uploads = multer({ dest: __dirname + '../../../uploads' }).array("file",5);
+    //  app.post('/admin/api/uploades',Uploads,(req,res) =>{
+    //      let file;
+    //      if(req.files.length === 0){
+    //          res.render('error',{message:'上传文件不能为空！'});
+    //      }else{
+    //          for(var i in req.files){
+    //              file = req.files[i];
+    //              file.url = `http://localhost:8089/uploads/${file.filename}`
+    //          }
+    //          res.send(file)
+    //      }
+    //  })
     /**---------mysql写法，我放弃了--------------------- */
     // /**
     //  * 查询主分类方法
