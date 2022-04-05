@@ -28,7 +28,10 @@ import Login from './components/Login.vue'
 const routes = [
     {
         path:'/login',
-        component:Login
+        component:Login,
+        meta:{
+            ispublic:true
+        }
     },
     {
         path: '/',
@@ -69,5 +72,14 @@ const router = createRouter({
     routes
 })
 
+//设置路由守卫
+router.beforeEach((to,form,next) =>{
+    if(!to.meta.ispublic && !localStorage.token){
+       if(to.path === 'login'){
+        return next('/login')
+       }
+    }
+    next()
+})
 
 export default router;

@@ -9,7 +9,18 @@ import http from './http'
 
 const app = createApp(App)
 
+
+const getAuthorization = () => {
+    return {
+        Authorization: `Bear ${localStorage.token || ''}`
+    }
+}
+
+
+
 app.config.globalProperties.$http = http
+app.config.globalProperties.$getAuth = getAuthorization
+
 app.use(router)
 app.use(ElementPlus)
 app.mount('#app')

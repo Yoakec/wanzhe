@@ -8,6 +8,7 @@
       <el-form-item label="图标">
           <el-upload
     class="avatar-uploader"
+    :headers="global.$getAuth()"
     :action="uploadURL+'/upload'"
     :show-file-list="false"
     :on-success="UploadProps"
