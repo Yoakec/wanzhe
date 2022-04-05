@@ -14,10 +14,22 @@ import HeroList from './components/HeroList.vue'
 
 import ArticleEdit from './components/ArticleEdit.vue'
 import ArticleList from './components/ArticleList.vue'
+
+
+import AdEdit from './components/AdEdit.vue'
+import AdList from './components/AdList.vue'
+
+import AdminUserEdit from './components/AdminUserEdit.vue'
+import AdminUserList from './components/AdminUserList.vue'
+import Login from './components/Login.vue'
 // 2. 定义一些路由
 // 每个路由都需要映射到一个组件。
 // 我们后面再讨论嵌套路由。
 const routes = [
+    {
+        path:'/login',
+        component:Login
+    },
     {
         path: '/',
         component: Main,
@@ -36,8 +48,15 @@ const routes = [
 
             {path:'/articles/create',component:ArticleEdit},
             {path:'/articles/edit/:id',component:ArticleEdit,props:true},
-            {path:'/articles/list',component:ArticleList}
+            {path:'/articles/list',component:ArticleList},
+            
+            {path:'/ads/create',component:AdEdit},
+            {path:'/ads/edit/:id',component:AdEdit,props:true},
+            {path:'/ads/list',component:AdList},
 
+            {path:'/admin_user/create',component:AdminUserEdit},
+            {path:'/admin_user/edit/:id',component:AdminUserEdit,props:true},
+            {path:'/admin_user/list',component:AdminUserList}
         ]
     }
 ]

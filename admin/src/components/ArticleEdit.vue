@@ -70,21 +70,7 @@ let model = reactive({
 const handleChange = (v) => {
   model.data.body = v
 }
-
-const uploadImage = async (files) => {
-      // files 获取的图片文件，这里处理逻辑
-      console.log(files[0]);
-      const formData = new FormData()
-      formData.append('file',files[0])
-      const {data} = await global.$http.post('/upload',formData)
-      return [
-        {
-          title: files.map((i) => i.name),
-          url: data.url
-        }
-      ]
-    }
-
+ 
 /**
  * 从list过来
  */
