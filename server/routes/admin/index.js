@@ -35,7 +35,7 @@ module.exports = app => {
         let model;
         switch (req.Model.modelName) {
             case 'Category':
-                model = await req.Model.find().populate('parent').limit(10)
+                model = await req.Model.find().populate('parent').limit(30)
                 break
             default:
                 model = await req.Model.find().limit(10)

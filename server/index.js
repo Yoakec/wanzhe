@@ -15,6 +15,7 @@ app.get('/',(req,res)=>{
 })
 require('./plugins/db')(app)
 require('./routes/admin/index')(app)
+require('./routes/web/index')(app)
 
 
 

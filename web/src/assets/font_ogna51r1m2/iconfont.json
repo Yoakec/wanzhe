@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2243244",
+      "name": "means",
+      "font_class": "means",
+      "unicode": "e726",
+      "unicode_decimal": 59174
+    },
+    {
+      "icon_id": "11208508",
+      "name": "23-superhero",
+      "font_class": "-superhero",
+      "unicode": "e69d",
+      "unicode_decimal": 59037
+    }
+  ]
+}
