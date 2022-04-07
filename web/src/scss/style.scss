@@ -212,6 +212,7 @@ $val in $flex-ai {
 //文字溢出
 
 .text-warp{
+    display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

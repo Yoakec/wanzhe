@@ -2,8 +2,8 @@
   <div class="about">
     <h1>{{ props.id ? "编辑" : "新建" }}英雄</h1>
     <el-form  :model="model" style="max-width: 860px">
-      <el-tabs type="border-card" model-value="skill">
-        <el-tab-pane label="基础信息">
+      <el-tabs type="border-card" model-value="basic">
+        <el-tab-pane label="基础信息" name="basic">
                 <el-form-item label="名称">
         <el-input v-model="model.data.name" />
       </el-form-item>
@@ -85,18 +85,29 @@
       <el-form-item label="团战思路">
         <el-input type='textarea' v-model="model.data.teamTips" />
       </el-form-item>
-
-
-
-
+        <el-form-item label="banner">
+        <el-upload
+          class="avatar-uploader"
+          :headers="global.$getAuth()"
+          :action="uploadURL + '/upload'"
+          :show-file-list="false"
+          :on-success=" res => model.data.banner = res.url"
+        >
+          <img v-if="model.data.banner" :src="model.data.banner" class="avatar" />
+          <el-icon v-else class="avatar-uploader-icon">
+            <Plus />
+          </el-icon>
+        </el-upload>
+      </el-form-item>
       <el-form-item label="头像">
         <el-upload
           class="avatar-uploader"
+          :headers="global.$getAuth()"
           :action="uploadURL + '/upload'"
           :show-file-list="false"
-          :on-success="UploadProps"
+          :on-success=" res => model.data.awatar = res.url"
         >
-          <img v-if="model.data.avator" :src="model.data.avator" class="avatar" />
+          <img v-if="model.data.awatar" :src="model.data.awatar" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon">
             <Plus />
           </el-icon>
@@ -113,6 +124,7 @@
               <el-form-item label="图标">
                    <el-upload
           class="avatar-uploader"
+          :headers="global.$getAuth()"
           :action="uploadURL + '/upload'"
           :show-file-list="false"
           :on-success="res => item.icon = res.url"
@@ -162,7 +174,8 @@ let uploadURL = ref(global.$http.defaults.baseURL)
 
 let model = reactive({data:{
     name:'',
-    avator:'',
+    awatar:'',
+    banner:'',
     title:'',
     categories:[],
     scores:{
@@ -224,9 +237,9 @@ getItems()
  * 上传图片
  * 上传成功后，会从服务器返回一个在线浏览地址
  */
-const UploadProps = (res) => {
-  model.data.avator = res.url
-}
+// const UploadProps = (res) => {
+//   model.data.awatar = res.url
+// }
 
 </script>
 

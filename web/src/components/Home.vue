@@ -1,9 +1,7 @@
 <template>
     <div>
-        <swiper
-            :autoplay="{ delay: 3500, disableOnInteraction: false }"
-            :pagination="{ clickable: true, dynamicBullets: true }"
-        >
+        <swiper :autoplay="{ delay: 3500, disableOnInteraction: false }"
+            :pagination="{ clickable: true, dynamicBullets: true }">
             <swiper-slide>
                 <img class="w-100" src="../assets/f86188d10da794efb4abb8e4cc48c0e3.jpeg" alt />
             </swiper-slide>
@@ -29,11 +27,28 @@
         </div>
         <m-listcard icon="-superhero" title="官方咨询" :categories="newcates">
             <template #items="{ category }">
-                <div class="py-2 d-flex" v-for="(items,i) in category.newsList" :key="i">
-                    <span class="text-primary">[{{items.categoryName}}]</span>
-                    <span class="px-2">|</span>
-                    <span class="flex-1 text-warp">{{items.title}}</span>
-                    <span>{{items.createdAt}}</span>
+                <router-link custom :to="`/articles/${items._id}`" v-slot="{ navigate, href }"
+                    v-for="(items, i) in category.newsList" :key="i">
+                    <div class="py-2 d-flex" @click="navigate" :href="href">
+                        <span class="text-primary">[{{ items.categoryName }}]</span>
+                        <span class="px-2">|</span>
+                        <span class="flex-1 text-warp pr-2">{{ items.title }}</span>
+                        <span class="text-grey fs-sm">{{ formatDay(items.createdAt) }}</span>
+                    </div>
+                </router-link>
+            </template>
+        </m-listcard>
+
+        <m-listcard icon="-superhero" title="英雄列表" :categories="herocates">
+            <template #items="{ category }">
+                <div class="d-flex flex-warp" style="margin:0 -0.5rem">
+                    <router-link custom :to="`/hero/${hero._id}`" v-slot="{ navigate, href }" class="p-2 text-center"
+                        v-for="(hero, i) in category.heroesList" :key="i">
+                        <div class="p-2 text-center" style="width:20%;" @click="navigate" :href="href">
+                            <img :src="hero.awatar" class="w-100" alt />
+                            <div>{{ hero.name }}</div>
+                        </div>
+                    </router-link>
                 </div>
             </template>
         </m-listcard>
@@ -46,7 +61,8 @@
 </template>
 
 <script setup>
-import { ref,getCurrentInstance } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
+import dayjs from 'dayjs'
 
 const internalInstance = getCurrentInstance();
 //  全局变量
@@ -55,12 +71,28 @@ let global = internalInstance.appContext.config.globalProperties;
 
 const newcates = ref([])
 
-const fetchNewsList = async () =>{
-    const {data} = await  global.$http.get('news/list')
+const fetchNewsList = async () => {
+    const { data } = await global.$http.get('news/list')
     newcates.value = [...data]
 }
 
 fetchNewsList()
+
+
+const herocates = ref([])
+
+const fetchheroesList = async () => {
+    const { data } = await global.$http.get('heroes/list')
+    herocates.value = [...data]
+}
+
+fetchheroesList()
+
+
+
+const formatDay = (val) => {
+    return dayjs(val).format('MM/DD')
+}
 
 
 </script>

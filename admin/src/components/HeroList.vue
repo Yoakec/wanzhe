@@ -4,9 +4,9 @@
             <el-table :data="items">
                 <el-table-column prop="_id" label="Id" width="220" />
                 <el-table-column prop="name" label="名称" />
-                <el-table-column prop="avator" label="头像" >
+                <el-table-column prop="awatar" label="头像" >
                     <template #default="scope">
-                        <img :src="scope.row.avator" alt="" style="height:3rem" />
+                        <img :src="scope.row.awatar" alt="" style="height:3rem" />
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="120">

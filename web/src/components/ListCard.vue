@@ -12,6 +12,7 @@
             <div class="pt-3">
                 <swiper
                 ref="list"
+                autoHeight="true"
                 @swiper="setControlledSwiper"
                 @slideChange="onSlideChange"
                 >
@@ -28,6 +29,7 @@
 
 <script setup>
 import {ref,reactive,nextTick  } from 'vue'
+
 
 const props = defineProps({
     title:String,
@@ -51,6 +53,7 @@ nextTick(() => {
 			console.log(state.controlledSwiper.slideTo(1,1000,false));
 		});
 
+
 const onSlideChange = (swiper) => {
     isactive.value  =  swiper.realIndex
 };
@@ -60,6 +63,7 @@ const toJump = (index) =>{
     isactive.value = index
     state.controlledSwiper.slideTo(index)
 }
+
 
 
 

@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema({
     name:{type:String},
-    avator:{type:String},
+    awatar:{type:String},
+    banner:{type:String},
     title:{type:String},
     categories:[{type:mongoose.Schema.Types.ObjectId,ref:'Category'}],
     scores:{
@@ -31,4 +32,4 @@ const schema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('Hero',schema)
+module.exports = mongoose.model('Hero',schema,'heroes')

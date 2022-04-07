@@ -8,7 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@bytemd/vue-next": "^1.13.1",
     "axios": "^0.26.1",
+    "dayjs": "^1.11.0",
     "swiper": "^8.0.7",
     "vue": "^3.2.25",
     "vue-awesome-swiper": "^5.0.1",
